@@ -19,19 +19,14 @@ public class Main {
         double rating = ScannerUtils.catchDecimal("Calificacion del Contenido");
 
 
-        Pelicula pelicula = new Pelicula();
-
-        pelicula.title = title;
-        pelicula.firstRelease = LocalDate.of(2018, 7, 15);
-        pelicula.genre = genre;
+        Pelicula pelicula = new Pelicula(title, length, genre);
         pelicula.rate(rating);
 
         System.out.println(pelicula.getFactSheet());
 
 
-        Usuario usuario = new Usuario();
-        usuario.name = "Robert ";
-        usuario.registrationDate = LocalDateTime.of(2025,12,5,13,15,22 );
+        Usuario usuario = new Usuario("Jorge Gonzalez", "Jorge@devstream.com");
+        
 
         usuario.watch(pelicula);
 
