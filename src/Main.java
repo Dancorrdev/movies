@@ -1,10 +1,6 @@
 import contenido.Pelicula;
-import platadorma.Usuario;
+import plataforma.Usuario;
 import util.ScannerUtils;
-
-import javax.print.attribute.standard.Fidelity;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     public static final String NOMBRE_PLATAFORMA = "🍿🍿🍿 Stream Dev 🎥🎥🎥";
@@ -26,7 +22,7 @@ public class Main {
 
 
         Usuario usuario = new Usuario("Jorge Gonzalez", "Jorge@devstream.com");
-        
+
 
         usuario.watch(pelicula);
 

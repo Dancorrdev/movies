@@ -1,8 +1,7 @@
-package platadorma;
+package plataforma;
 
 import contenido.Pelicula;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Usuario {
@@ -19,5 +18,25 @@ public class Usuario {
     public void watch(Pelicula pelicula){
         System.out.println(name + " esta viendo ... ");
         pelicula.play();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

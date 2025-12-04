@@ -3,13 +3,13 @@ package contenido;
 import java.time.LocalDate;
 
 public class Pelicula {
-    public String title;
-    public String description;
-    public int length;
-    public String genre;
-    public LocalDate firstRelease;
-    public double rating;
-    public boolean available;
+    private String title;
+    private String description;
+    private int length;
+    private String genre;
+    private LocalDate firstRelease;
+    private double rating;
+    private boolean available;
 
     public Pelicula(String title, int length, String genre){
         this.title = title;
@@ -42,5 +42,49 @@ public class Pelicula {
 
     public boolean isPopular() {
         return rating >= 4;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public LocalDate getFirstRelease() {
+        return firstRelease;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setFirstRelease(LocalDate firstRelease) {
+        this.firstRelease = firstRelease;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
