@@ -28,6 +28,15 @@ public class Plataforma {
         contenido.remove(pelicula);
     }
 
+    public Pelicula findByTitle(String title){
+        for (Pelicula pelicula : contenido) {
+            if (pelicula.getTitle().equalsIgnoreCase(title)) {
+                return pelicula;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }
