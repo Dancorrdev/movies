@@ -1,5 +1,7 @@
 package util;
 
+import contenido.Genero;
+
 import java.util.Scanner;
 
 public class ScannerUtils {
@@ -31,5 +33,21 @@ public class ScannerUtils {
         double dato = SCANNER.nextDouble();
         SCANNER.nextLine();
         return dato;
+    }
+    public static Genero catchGenre(String mensaje){
+       while (true) {
+           System.out.println(mensaje + "... Opciones disponibles:");
+              for (Genero genero : Genero.values()) {
+                System.out.println("- " + genero.name());
+              }
+
+           System.out.println("Cual género eliges?");
+           String entry = SCANNER.nextLine();
+           try {
+               return Genero.valueOf(entry.toUpperCase());
+           } catch (IllegalArgumentException e) {
+               System.out.println("Género no aceptado. Por favor ingrese un género válido." + mensaje + ": ");
+           }
+       }
     }
 }

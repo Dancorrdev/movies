@@ -1,5 +1,6 @@
 package plataforma;
 
+import contenido.Genero;
 import contenido.Pelicula;
 
 import java.util.ArrayList;
@@ -19,8 +20,10 @@ public class Plataforma {
         contenido.add(pelicula);
     }
 
-    public void showMovies(){
-        contenido.forEach(pelicula -> System.out.println(pelicula.getTitle()));
+    public List<String> showMovies() {
+        return contenido.stream()
+                .map(Pelicula::getTitle)
+                .toList();
     }
 
     public void remove(Pelicula pelicula){
@@ -34,9 +37,9 @@ public class Plataforma {
                 .orElse(null);
     }
 
-    public List<Pelicula> findByGenre(String genre){
+    public List<Pelicula> findByGenre(Genero genre){
         return contenido.stream()
-                .filter(contenido-> contenido.getGenre().equalsIgnoreCase(genre))
+                .filter(contenido-> contenido.getGenre().equals(genre))
                 .toList();
     }
 

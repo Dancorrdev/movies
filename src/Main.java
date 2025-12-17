@@ -1,6 +1,6 @@
+import contenido.Genero;
 import contenido.Pelicula;
 import plataforma.Plataforma;
-import plataforma.Usuario;
 import util.ScannerUtils;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class Main {
             switch (selectedOption) {
                 case AGREGAR_CONTENIDO -> {
                     String title = ScannerUtils.catchText("Nombre del contenido");
-                    String genre = ScannerUtils.catchText("Genero del contenido");
+                    Genero genre = ScannerUtils.catchGenre("Género del contenido");
                     int length = ScannerUtils.catchNumber("Duracion del contenido");
                     double rating = ScannerUtils.catchDecimal("Calificacion del Contenido");
 
@@ -49,12 +49,13 @@ public class Main {
                     System.out.println("Contenido agregado exitosamente.");
                 }
                 case MOSTRAR_TODO -> {
-                    plataforma.showMovies();
-                System.out.println("total de contenidos: " + plataforma.getContenido().size());
+                    List<String> allContent = plataforma.showMovies();
+                    System.out.println("Contenidos disponibles en " + NOMBRE_PLATAFORMA + ":");
+                    allContent.forEach(System.out::println);
             }
                 case BUSCAR_POR_TITULO -> {
-                    String NombreContenido = ScannerUtils.catchText("Ingrese el título del contenido a buscar");
-                    Pelicula pelicula = plataforma.findByTitle(NombreContenido);
+                    String nombreContenido = ScannerUtils.catchText("Ingrese el título del contenido a buscar");
+                    Pelicula pelicula = plataforma.findByTitle(nombreContenido);
                     if (pelicula != null) {
                         System.out.println(pelicula.getFactSheet());
                 }else {
@@ -62,7 +63,7 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    String generoDelContenido = ScannerUtils.catchText("Ingrese el género del contenido a buscar");
+                    Genero generoDelContenido = ScannerUtils.catchGenre("Ingrese el género del contenido a buscar");
                     List<Pelicula> contenidoPorGenero = plataforma.findByGenre(generoDelContenido);
                     System.out.println(contenidoPorGenero.size() + " Contenidos encontrados en el género " + generoDelContenido);
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.getFactSheet() + "\n"));
@@ -102,26 +103,26 @@ public class Main {
         }
     }
     private static void loadMovies(Plataforma plataforma) {
-        plataforma.add(new Pelicula("The Shawshank Redemption", 142, "Drama", 4.9));
-        plataforma.add(new Pelicula("The Godfather", 175, "Crime", 4.8));
-        plataforma.add(new Pelicula("The Dark Knight", 152, "Action", 4.7));
-        plataforma.add(new Pelicula("Pulp Fiction", 154, "Crime", 4.6));
-        plataforma.add(new Pelicula("Sherk", 158, "Animada", 4.3));
-        plataforma.add(new Pelicula("Toy Story", 81, "Animada", 4.5));
-        plataforma.add(new Pelicula("Finding Nemo", 100, "Animada", 4.4));
-        plataforma.add(new Pelicula("Inception", 148, "Sci-Fi", 4.6));
-        plataforma.add(new Pelicula("The Matrix", 136, "Sci-Fi", 4.7));
-        plataforma.add(new Pelicula("Interstellar", 169, "Sci-Fi", 4.5));
-        plataforma.add(new Pelicula("Gladiator", 155, "Action", 4.4));
-        plataforma.add(new Pelicula("Star Wars: Episode IV - A New Hope", 121, "Sci-Fi", 4.6));
-        plataforma.add(new Pelicula("Star Wars: Episode III - Revenge of the Sith", 140, "Sci-Fi", 4.2));
-        plataforma.add(new Pelicula("Avengers: Endgame", 181, "Action", 4.7));
-        plataforma.add(new Pelicula("Harry Potter and the Secret of the Chamber", 161, "Fantasy", 4.5));
-        plataforma.add(new Pelicula("Justice League Snyder Cut", 242, "Action", 4.1));
-        plataforma.add(new Pelicula("Spiman : Into the Spider-Verse", 117, "Animada", 4.8));
-        plataforma.add(new Pelicula("Dragon Ball Evolution", 85, "Action", 2.3));
-        plataforma.add(new Pelicula("Catwoman", 104, "Action", 1.9));
-        plataforma.add(new Pelicula("John Carter", 132, "Sci-Fi", 3.1));
+        plataforma.add(new Pelicula("The Shawshank Redemption", 142, Genero.DRAMA, 4.9));
+        plataforma.add(new Pelicula("The Godfather", 175, Genero.CRIMEN, 4.8));
+        plataforma.add(new Pelicula("The Dark Knight", 152, Genero.ACCION, 4.7));
+        plataforma.add(new Pelicula("Pulp Fiction", 154, Genero.CRIMEN, 4.6));
+        plataforma.add(new Pelicula("Sherk", 158, Genero.ANIMADA, 4.3));
+        plataforma.add(new Pelicula("Toy Story", 81, Genero.ANIMADA, 4.5));
+        plataforma.add(new Pelicula("Finding Nemo", 100, Genero.ANIMADA, 4.4));
+        plataforma.add(new Pelicula("Inception", 148, Genero.CIENCIA_FICCION, 4.6));
+        plataforma.add(new Pelicula("The Matrix", 136, Genero.CIENCIA_FICCION, 4.7));
+        plataforma.add(new Pelicula("Interstellar", 169, Genero.CIENCIA_FICCION, 4.5));
+        plataforma.add(new Pelicula("Gladiator", 155, Genero.ACCION, 4.4));
+        plataforma.add(new Pelicula("Star Wars: Episode IV - A New Hope", 121, Genero.CIENCIA_FICCION, 4.6));
+        plataforma.add(new Pelicula("Star Wars: Episode III - Revenge of the Sith", 140, Genero.CIENCIA_FICCION, 4.2));
+        plataforma.add(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 4.7));
+        plataforma.add(new Pelicula("Harry Potter and the Secret of the Chamber", 161, Genero.FANTASIA, 4.5));
+        plataforma.add(new Pelicula("Justice League Snyder Cut", 242, Genero.ACCION, 4.1));
+        plataforma.add(new Pelicula("Spiderman : Into the Spider-Verse", 117, Genero.ANIMADA, 4.8));
+        plataforma.add(new Pelicula("Dragon Ball Evolution", 85, Genero.ACCION, 2.3));
+        plataforma.add(new Pelicula("Catwoman", 104, Genero.ACCION, 1.9));
+        plataforma.add(new Pelicula("John Carter", 132, Genero.CIENCIA_FICCION, 3.1));
 
 
     }

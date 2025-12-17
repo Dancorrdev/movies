@@ -6,12 +6,12 @@ public class Pelicula {
     private String title;
     private String description;
     private int length;
-    private String genre;
+    private Genero genre;
     private LocalDate firstRelease;
     private double rating;
     private boolean available;
 
-    public Pelicula(String title, int length, String genre){
+    public Pelicula(String title, int length, Genero genre){
         this.title = title;
         this.length = length;
         this.genre = genre;
@@ -19,7 +19,7 @@ public class Pelicula {
         this.available = true;
     }
 
-    public Pelicula(String title, int length, String genre, double rating) {
+    public Pelicula(String title, int length, Genero genre, double rating) {
         this(title, length, genre);
         this.rate(rating);
     }
@@ -56,7 +56,7 @@ public class Pelicula {
         return length;
     }
 
-    public String getGenre() {
+    public Genero getGenre() {
         return genre;
     }
 
