@@ -1,5 +1,6 @@
 import contenido.Genero;
 import contenido.Pelicula;
+import exception.PeliculaExistenteExcepcion;
 import plataforma.Plataforma;
 import util.ScannerUtils;
 
@@ -45,6 +46,11 @@ public class Main {
                     int length = ScannerUtils.catchNumber("Duracion del contenido");
                     double rating = ScannerUtils.catchDecimal("Calificacion del Contenido");
 
+                    try {
+                        plataforma.add(new Pelicula(title, length, genre, rating));
+                    } catch (PeliculaExistenteExcepcion e) {
+                        System.out.println(e.getMessage());
+                    }
                     plataforma.add(new Pelicula(title, length, genre, rating));
                     System.out.println("Contenido agregado exitosamente.");
                 }
@@ -52,13 +58,13 @@ public class Main {
                     List<String> allContent = plataforma.showMovies();
                     System.out.println("Contenidos disponibles en " + NOMBRE_PLATAFORMA + ":");
                     allContent.forEach(System.out::println);
-            }
+                }
                 case BUSCAR_POR_TITULO -> {
                     String nombreContenido = ScannerUtils.catchText("Ingrese el título del contenido a buscar");
                     Pelicula pelicula = plataforma.findByTitle(nombreContenido);
                     if (pelicula != null) {
                         System.out.println(pelicula.getFactSheet());
-                }else {
+                    } else {
                         System.out.println("Contenido no encontrado dentro de" + NOMBRE_PLATAFORMA + ".");
                     }
                 }
@@ -102,6 +108,7 @@ public class Main {
             }
         }
     }
+
     private static void loadMovies(Plataforma plataforma) {
         plataforma.add(new Pelicula("The Shawshank Redemption", 142, Genero.DRAMA, 4.9));
         plataforma.add(new Pelicula("The Godfather", 175, Genero.CRIMEN, 4.8));

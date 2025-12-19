@@ -2,6 +2,7 @@ package plataforma;
 
 import contenido.Genero;
 import contenido.Pelicula;
+import exception.PeliculaExistenteExcepcion;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,8 +17,12 @@ public class Plataforma {
         this.contenido = new ArrayList<>();
     }
 
-    public void add(Pelicula pelicula){
-        contenido.add(pelicula);
+    public void add(Pelicula pelicula) {
+        Pelicula contenido = this.findByTitle(pelicula.getTitle());
+        if (contenido != null) {
+            throw new PeliculaExistenteExcepcion(pelicula.getTitle());
+        }
+        this.contenido.add(pelicula);
     }
 
     public List<String> showMovies() {
