@@ -2,6 +2,7 @@ package plataforma;
 
 import contenido.Genero;
 import contenido.Pelicula;
+import contenido.ResumenContenido;
 import exception.PeliculaExistenteExcepcion;
 
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ public class Plataforma {
     public List<String> showMovies() {
         return contenido.stream()
                 .map(Pelicula::getTitle)
+                .toList();
+    }
+
+    public List<ResumenContenido> getResumenes(){
+        return  contenido.stream().map(c-> new ResumenContenido(c.getTitle(), c.getLength(), c.getGenre()))
                 .toList();
     }
 

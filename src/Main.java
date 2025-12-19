@@ -1,5 +1,6 @@
 import contenido.Genero;
 import contenido.Pelicula;
+import contenido.ResumenContenido;
 import exception.PeliculaExistenteExcepcion;
 import plataforma.Plataforma;
 import util.ScannerUtils;
@@ -55,9 +56,8 @@ public class Main {
                     System.out.println("Contenido agregado exitosamente.");
                 }
                 case MOSTRAR_TODO -> {
-                    List<String> allContent = plataforma.showMovies();
-                    System.out.println("Contenidos disponibles en " + NOMBRE_PLATAFORMA + ":");
-                    allContent.forEach(System.out::println);
+                    List<ResumenContenido> allContent = plataforma.getResumenes();
+                    allContent.forEach(resumen -> System.out.println(resumen.toString()));
                 }
                 case BUSCAR_POR_TITULO -> {
                     String nombreContenido = ScannerUtils.catchText("Ingrese el título del contenido a buscar");
