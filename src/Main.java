@@ -16,6 +16,7 @@ public class Main {
     public static final int BUSCAR_POR_GENERO = 4;
     public static final int VER_POPULARES = 5;
     public static final int VER_MAS_LARGO = 6;
+    public static final int REPRODUCIR_CONTENIDO = 7;
     public static final int ELIMINAR_CONTENIDO = 8;
     public static final int SALIR = 9;
 
@@ -36,6 +37,7 @@ public class Main {
                     4. Buscar por género
                     5. Ver populares
                     6. Ver contenido más largo
+                    7. Reproducir contenido
                     8. Eliminar contenido
                     9. Salir
                     """
@@ -88,6 +90,15 @@ public class Main {
                         System.out.println(peliculaMasLarga.getFactSheet() + "\n");
                     } else {
                         System.out.println("No hay contenido disponible en la plataforma.");
+                    }
+                }
+                case REPRODUCIR_CONTENIDO -> {
+                    String contenidoAReproducir = ScannerUtils.catchText("Ingrese el título del contenido a reproducir");
+                    Pelicula pelicula = plataforma.findByTitle(contenidoAReproducir);
+                    if (pelicula != null) {
+                        plataforma.reproducir(pelicula);
+                    } else {
+                        System.out.println("Contenido no encontrado dentro de " + NOMBRE_PLATAFORMA + ".");
                     }
                 }
                 case ELIMINAR_CONTENIDO -> {

@@ -5,17 +5,17 @@ import contenido.Pelicula;
 import contenido.ResumenContenido;
 import exception.PeliculaExistenteExcepcion;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Plataforma {
     private String name;
     private List<Pelicula> contenido;
+    private Map<Pelicula, Integer> visualizaciones;
 
-    public Plataforma(String name){
+    public Plataforma(String name) {
         this.name = name;
         this.contenido = new ArrayList<>();
+        this.visualizaciones = new HashMap<>();
     }
 
     public void add(Pelicula pelicula) {
@@ -26,47 +26,58 @@ public class Plataforma {
         this.contenido.add(pelicula);
     }
 
+    public void reproducir(Pelicula contenido) {
+        int conteoActual = visualizaciones.getOrDefault(contenido, 0);
+        System.out.println(contenido.getTitle() + " se ha reproducido " + (conteoActual + 1) + " veces.");
+        this.contarVisializaciones(contenido);
+        contenido.play();
+    }
+
+    private void contarVisializaciones(Pelicula contenido) {
+        visualizaciones.put(contenido, visualizaciones.getOrDefault(contenido, 0) + 1);
+    }
+
     public List<String> showMovies() {
         return contenido.stream()
                 .map(Pelicula::getTitle)
                 .toList();
     }
 
-    public List<ResumenContenido> getResumenes(){
-        return  contenido.stream().map(c-> new ResumenContenido(c.getTitle(), c.getLength(), c.getGenre()))
+    public List<ResumenContenido> getResumenes() {
+        return contenido.stream().map(c -> new ResumenContenido(c.getTitle(), c.getLength(), c.getGenre()))
                 .toList();
     }
 
-    public void remove(Pelicula pelicula){
+    public void remove(Pelicula pelicula) {
         contenido.remove(pelicula);
     }
 
     public Pelicula findByTitle(String title) {
-       return contenido.stream()
+        return contenido.stream()
                 .filter(contenido -> contenido.getTitle().equalsIgnoreCase(title))
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<Pelicula> findByGenre(Genero genre){
+    public List<Pelicula> findByGenre(Genero genre) {
         return contenido.stream()
-                .filter(contenido-> contenido.getGenre().equals(genre))
+                .filter(contenido -> contenido.getGenre().equals(genre))
                 .toList();
     }
 
-    public int getDuracionTotal(){
+    public int getDuracionTotal() {
         return contenido.stream()
                 .mapToInt(Pelicula::getLength)
                 .sum();
     }
 
-    public List<Pelicula> getPopularContent(int cantidad){
+    public List<Pelicula> getPopularContent(int cantidad) {
         return contenido.stream().sorted(Comparator.comparingDouble(Pelicula::getRating).reversed())
                 .limit(cantidad)
                 .toList();
     }
 
-    public Pelicula getLongestMovie(){
+    public Pelicula getLongestMovie() {
         return contenido.stream()
                 .max(Comparator.comparingInt(Pelicula::getLength))
                 .orElse(null);
