@@ -1,16 +1,17 @@
 package plataforma;
 
 import contenido.Genero;
-import contenido.Pelicula;
+import contenido.Contenido;
 import contenido.ResumenContenido;
 import exception.PeliculaExistenteExcepcion;
+import util.FileUtils;
 
 import java.util.*;
 
 public class Plataforma {
     private String name;
-    private List<Pelicula> contenido;
-    private Map<Pelicula, Integer> visualizaciones;
+    private List<Contenido> contenido;
+    private Map<Contenido, Integer> visualizaciones;
 
     public Plataforma(String name) {
         this.name = name;
@@ -18,28 +19,31 @@ public class Plataforma {
         this.visualizaciones = new HashMap<>();
     }
 
-    public void add(Pelicula pelicula) {
-        Pelicula contenido = this.findByTitle(pelicula.getTitle());
+    public void add(Contenido elemento) {
+        Contenido contenido = this.findByTitle(elemento.getTitle());
+        System.out.println(contenido);
         if (contenido != null) {
-            throw new PeliculaExistenteExcepcion(pelicula.getTitle());
+            throw new PeliculaExistenteExcepcion(elemento.getTitle());
         }
-        this.contenido.add(pelicula);
+
+        FileUtils.writeFile(elemento);
+        this.contenido.add(elemento);
     }
 
-    public void reproducir(Pelicula contenido) {
+    public void reproducir(Contenido contenido) {
         int conteoActual = visualizaciones.getOrDefault(contenido, 0);
         System.out.println(contenido.getTitle() + " se ha reproducido " + (conteoActual + 1) + " veces.");
         this.contarVisializaciones(contenido);
         contenido.play();
     }
 
-    private void contarVisializaciones(Pelicula contenido) {
+    private void contarVisializaciones(Contenido contenido) {
         visualizaciones.put(contenido, visualizaciones.getOrDefault(contenido, 0) + 1);
     }
 
     public List<String> showMovies() {
         return contenido.stream()
-                .map(Pelicula::getTitle)
+                .map(Contenido::getTitle)
                 .toList();
     }
 
@@ -48,18 +52,18 @@ public class Plataforma {
                 .toList();
     }
 
-    public void remove(Pelicula pelicula) {
-        contenido.remove(pelicula);
+    public void remove(Contenido contenido) {
+        this.contenido.remove(contenido);
     }
 
-    public Pelicula findByTitle(String title) {
+    public Contenido findByTitle(String title) {
         return contenido.stream()
                 .filter(contenido -> contenido.getTitle().equalsIgnoreCase(title))
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<Pelicula> findByGenre(Genero genre) {
+    public List<Contenido> findByGenre(Genero genre) {
         return contenido.stream()
                 .filter(contenido -> contenido.getGenre().equals(genre))
                 .toList();
@@ -67,19 +71,19 @@ public class Plataforma {
 
     public int getDuracionTotal() {
         return contenido.stream()
-                .mapToInt(Pelicula::getLength)
+                .mapToInt(Contenido::getLength)
                 .sum();
     }
 
-    public List<Pelicula> getPopularContent(int cantidad) {
-        return contenido.stream().sorted(Comparator.comparingDouble(Pelicula::getRating).reversed())
+    public List<Contenido> getPopularContent(int cantidad) {
+        return contenido.stream().sorted(Comparator.comparingDouble(Contenido::getRating).reversed())
                 .limit(cantidad)
                 .toList();
     }
 
-    public Pelicula getLongestMovie() {
+    public Contenido getLongestMovie() {
         return contenido.stream()
-                .max(Comparator.comparingInt(Pelicula::getLength))
+                .max(Comparator.comparingInt(Contenido::getLength))
                 .orElse(null);
     }
 
@@ -87,7 +91,7 @@ public class Plataforma {
         return name;
     }
 
-    public List<Pelicula> getContenido() {
+    public List<Contenido> getContenido() {
         return contenido;
     }
 }

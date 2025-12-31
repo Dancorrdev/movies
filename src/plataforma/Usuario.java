@@ -1,6 +1,6 @@
 package plataforma;
 
-import contenido.Pelicula;
+import contenido.Contenido;
 
 import java.time.LocalDateTime;
 
@@ -15,9 +15,9 @@ public class Usuario {
         this.registrationDate = LocalDateTime.now();
     }
 
-    public void watch(Pelicula pelicula){
+    public void watch(Contenido contenido){
         System.out.println(name + " esta viendo ... ");
-        pelicula.play();
+        contenido.play();
     }
 
     public String getName() {

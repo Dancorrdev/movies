@@ -1,15 +1,9 @@
-import contenido.Genero;
-import contenido.Pelicula;
-import contenido.ResumenContenido;
+import contenido.*;
 import exception.PeliculaExistenteExcepcion;
 import plataforma.Plataforma;
 import util.FileUtils;
 import util.ScannerUtils;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -49,17 +43,29 @@ public class Main {
             );
             switch (selectedOption) {
                 case AGREGAR_CONTENIDO -> {
+                    int tipoDeContenido = ScannerUtils.catchNumber("""
+                            Seleccione el tipo de contenido a agregar:
+                            1. Película
+                            2. Documental
+                            """);
                     String title = ScannerUtils.catchText("Nombre del contenido");
                     Genero genre = ScannerUtils.catchGenre("Género del contenido");
                     int length = ScannerUtils.catchNumber("Duracion del contenido");
                     double rating = ScannerUtils.catchDecimal("Calificacion del Contenido");
 
                     try {
-                        plataforma.add(new Pelicula(title, length, genre, rating));
+                        if (tipoDeContenido == 1) {
+                            plataforma.add(new Pelicula(title, length, genre, rating));
+                        } else if (tipoDeContenido == 2) {
+                            String narrator = ScannerUtils.catchText("Narrador del documental");
+                            plataforma.add(new Documental(title, length, genre, rating, narrator));
+                        } else {
+                            System.out.println("Tipo de contenido no válido. Operación cancelada.");
+                            break;
+                        }
                     } catch (PeliculaExistenteExcepcion e) {
                         System.out.println(e.getMessage());
                     }
-                    plataforma.add(new Pelicula(title, length, genre, rating));
                     System.out.println("Contenido agregado exitosamente.");
                 }
                 case MOSTRAR_TODO -> {
@@ -68,49 +74,49 @@ public class Main {
                 }
                 case BUSCAR_POR_TITULO -> {
                     String nombreContenido = ScannerUtils.catchText("Ingrese el título del contenido a buscar");
-                    Pelicula pelicula = plataforma.findByTitle(nombreContenido);
-                    if (pelicula != null) {
-                        System.out.println(pelicula.getFactSheet());
+                    Contenido contenido = plataforma.findByTitle(nombreContenido);
+                    if (contenido != null) {
+                        System.out.println(contenido.getFactSheet());
                     } else {
                         System.out.println("Contenido no encontrado dentro de" + NOMBRE_PLATAFORMA + ".");
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
                     Genero generoDelContenido = ScannerUtils.catchGenre("Ingrese el género del contenido a buscar");
-                    List<Pelicula> contenidoPorGenero = plataforma.findByGenre(generoDelContenido);
+                    List<Contenido> contenidoPorGenero = plataforma.findByGenre(generoDelContenido);
                     System.out.println(contenidoPorGenero.size() + " Contenidos encontrados en el género " + generoDelContenido);
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.getFactSheet() + "\n"));
                 }
                 case VER_POPULARES -> {
                     int cantidad = ScannerUtils.catchNumber("¿Cuántos contenidos populares desea ver?");
 
-                    List<Pelicula> contenidosPopulares = plataforma.getPopularContent(cantidad);
+                    List<Contenido> contenidosPopulares = plataforma.getPopularContent(cantidad);
                     System.out.println("Top " + contenidosPopulares.size() + " contenidos populares:");
                     contenidosPopulares.forEach(contenido -> System.out.println(contenido.getFactSheet() + "\n"));
                 }
                 case VER_MAS_LARGO -> {
-                    Pelicula peliculaMasLarga = plataforma.getLongestMovie();
-                    if (peliculaMasLarga != null) {
+                    Contenido contenidoMasLarga = plataforma.getLongestMovie();
+                    if (contenidoMasLarga != null) {
                         System.out.println("El contenido más largo es: +\n");
-                        System.out.println(peliculaMasLarga.getFactSheet() + "\n");
+                        System.out.println(contenidoMasLarga.getFactSheet() + "\n");
                     } else {
                         System.out.println("No hay contenido disponible en la plataforma.");
                     }
                 }
                 case REPRODUCIR_CONTENIDO -> {
                     String contenidoAReproducir = ScannerUtils.catchText("Ingrese el título del contenido a reproducir");
-                    Pelicula pelicula = plataforma.findByTitle(contenidoAReproducir);
-                    if (pelicula != null) {
-                        plataforma.reproducir(pelicula);
+                    Contenido contenido = plataforma.findByTitle(contenidoAReproducir);
+                    if (contenido != null) {
+                        plataforma.reproducir(contenido);
                     } else {
                         System.out.println("Contenido no encontrado dentro de " + NOMBRE_PLATAFORMA + ".");
                     }
                 }
                 case ELIMINAR_CONTENIDO -> {
                     String contenidoABorrar = ScannerUtils.catchText("Ingrese el título del contenido a eliminar");
-                    Pelicula pelicula = plataforma.findByTitle(contenidoABorrar);
-                    if (pelicula != null) {
-                        plataforma.remove(pelicula);
+                    Contenido contenido = plataforma.findByTitle(contenidoABorrar);
+                    if (contenido != null) {
+                        plataforma.remove(contenido);
                         System.out.println("Contenido eliminado exitosamente.");
                     } else {
                         System.out.println("Contenido no encontrado dentro de " + NOMBRE_PLATAFORMA + ".");

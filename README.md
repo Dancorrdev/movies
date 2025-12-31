@@ -1,4 +1,3 @@
-# movies
 # 🎬 Movies App
 
 Este es un proyecto en Java que permite buscar y visualizar información de películas (título, sinopsis, etc.) — una aplicación temática relacionada con **películas**.

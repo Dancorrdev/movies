@@ -18,3 +18,4 @@ Spiderman : Into the Spider-Verse|117|ANIMADA|4.8|2018-12-14
 Dragon Ball Evolution|85|ACCION|2.3|2009-04-14
 Catwoman|104|ACCION|1.9|2004-07-23
 John Carter|132|CIENCIA_FICCION|3.2|2012-03-09
+Jumper|120|ACCION|3.2|2025-12-31
