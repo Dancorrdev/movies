@@ -3,8 +3,13 @@ import contenido.Pelicula;
 import contenido.ResumenContenido;
 import exception.PeliculaExistenteExcepcion;
 import plataforma.Plataforma;
+import util.FileUtils;
 import util.ScannerUtils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -121,27 +126,6 @@ public class Main {
     }
 
     private static void loadMovies(Plataforma plataforma) {
-        plataforma.add(new Pelicula("The Shawshank Redemption", 142, Genero.DRAMA, 4.9));
-        plataforma.add(new Pelicula("The Godfather", 175, Genero.CRIMEN, 4.8));
-        plataforma.add(new Pelicula("The Dark Knight", 152, Genero.ACCION, 4.7));
-        plataforma.add(new Pelicula("Pulp Fiction", 154, Genero.CRIMEN, 4.6));
-        plataforma.add(new Pelicula("Sherk", 158, Genero.ANIMADA, 4.3));
-        plataforma.add(new Pelicula("Toy Story", 81, Genero.ANIMADA, 4.5));
-        plataforma.add(new Pelicula("Finding Nemo", 100, Genero.ANIMADA, 4.4));
-        plataforma.add(new Pelicula("Inception", 148, Genero.CIENCIA_FICCION, 4.6));
-        plataforma.add(new Pelicula("The Matrix", 136, Genero.CIENCIA_FICCION, 4.7));
-        plataforma.add(new Pelicula("Interstellar", 169, Genero.CIENCIA_FICCION, 4.5));
-        plataforma.add(new Pelicula("Gladiator", 155, Genero.ACCION, 4.4));
-        plataforma.add(new Pelicula("Star Wars: Episode IV - A New Hope", 121, Genero.CIENCIA_FICCION, 4.6));
-        plataforma.add(new Pelicula("Star Wars: Episode III - Revenge of the Sith", 140, Genero.CIENCIA_FICCION, 4.2));
-        plataforma.add(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 4.7));
-        plataforma.add(new Pelicula("Harry Potter and the Secret of the Chamber", 161, Genero.FANTASIA, 4.5));
-        plataforma.add(new Pelicula("Justice League Snyder Cut", 242, Genero.ACCION, 4.1));
-        plataforma.add(new Pelicula("Spiderman : Into the Spider-Verse", 117, Genero.ANIMADA, 4.8));
-        plataforma.add(new Pelicula("Dragon Ball Evolution", 85, Genero.ACCION, 2.3));
-        plataforma.add(new Pelicula("Catwoman", 104, Genero.ACCION, 1.9));
-        plataforma.add(new Pelicula("John Carter", 132, Genero.CIENCIA_FICCION, 3.1));
-
-
+        plataforma.getContenido().addAll(FileUtils.readFile());
     }
 }
