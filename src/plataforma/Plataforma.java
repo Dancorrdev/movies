@@ -1,8 +1,6 @@
 package plataforma;
 
-import contenido.Genero;
-import contenido.Contenido;
-import contenido.ResumenContenido;
+import contenido.*;
 import exception.PeliculaExistenteExcepcion;
 import util.FileUtils;
 
@@ -85,6 +83,21 @@ public class Plataforma {
         return contenido.stream()
                 .max(Comparator.comparingInt(Contenido::getLength))
                 .orElse(null);
+    }
+
+    public List<Pelicula> getPeliculas() {
+        return  contenido.stream()
+                .filter(contenido -> contenido instanceof Pelicula )
+                .map(contenidoFiltrado -> (Pelicula) contenidoFiltrado)
+                .toList();
+    }
+
+
+    public List<Documental> getDocumentales() {
+        return  contenido.stream()
+                .filter(contenido -> contenido instanceof Documental )
+                .map(contenidoFiltrado -> (Documental) contenidoFiltrado)
+                .toList();
     }
 
     public String getName() {

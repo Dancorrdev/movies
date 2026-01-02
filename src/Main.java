@@ -16,8 +16,9 @@ public class Main {
     public static final int VER_POPULARES = 5;
     public static final int VER_MAS_LARGO = 6;
     public static final int REPRODUCIR_CONTENIDO = 7;
-    public static final int ELIMINAR_CONTENIDO = 8;
-    public static final int SALIR = 9;
+    public static final int BUSCAR_POR_TIPO = 8;
+    public static final int ELIMINAR_CONTENIDO = 9;
+    public static final int SALIR = 10;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -37,8 +38,9 @@ public class Main {
                     5. Ver populares
                     6. Ver contenido más largo
                     7. Reproducir contenido
-                    8. Eliminar contenido
-                    9. Salir
+                    8. Buscar por tipo de contenido
+                    9. Eliminar contenido
+                    10. Salir
                     """
             );
             switch (selectedOption) {
@@ -110,6 +112,25 @@ public class Main {
                         plataforma.reproducir(contenido);
                     } else {
                         System.out.println("Contenido no encontrado dentro de " + NOMBRE_PLATAFORMA + ".");
+                    }
+                }
+
+                case BUSCAR_POR_TIPO -> {
+                    int tipoDeContenido = ScannerUtils.catchNumber("""
+                            Seleccione el tipo de contenido a buscar:
+                            1. Película
+                            2. Documental
+                            """);
+                    if (tipoDeContenido == 1) {
+                        List<Pelicula> peliculas = plataforma.getPeliculas();
+                        System.out.println("Películas encontradas:");
+                        peliculas.forEach(contenido -> System.out.println(contenido.getFactSheet() + "\n"));
+                    } else if (tipoDeContenido == 2) {
+                        List<Documental> documentales = plataforma.getDocumentales();
+                        System.out.println("Documentales encontrados:");
+                        documentales.forEach(contenido -> System.out.println(contenido.getFactSheet() + "\n"));
+                    } else {
+                        System.out.println("Tipo de contenido no válido.");
                     }
                 }
                 case ELIMINAR_CONTENIDO -> {

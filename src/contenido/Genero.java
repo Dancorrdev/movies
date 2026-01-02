@@ -10,4 +10,6 @@ public enum Genero {
     COMEDIA,
     AVENTURAS,
     TERROR,
+    NATURALEZA,
+    DEPORTES
 }
