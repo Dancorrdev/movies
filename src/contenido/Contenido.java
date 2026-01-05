@@ -3,7 +3,7 @@ package contenido;
 import java.time.LocalDate;
 
 
-public class Contenido {
+public abstract class Contenido {
     private String title;
     private String description;
     private int length;
@@ -25,9 +25,7 @@ public class Contenido {
         this.rate(rating);
     }
 
-    public void play(){
-        System.out.println("Playing " + title);
-    }
+    public abstract void play();
 
     public String getFactSheet(){
         return title + " (" + firstRelease + ")\n" +

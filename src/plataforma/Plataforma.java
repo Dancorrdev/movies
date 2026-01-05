@@ -100,6 +100,13 @@ public class Plataforma {
                 .toList();
     }
 
+    public List<Promotionable> getPromotionables() {
+        return  contenido.stream()
+                .filter(contenido -> contenido instanceof Promotionable )
+                .map(contenidoProm -> (Promotionable) contenidoProm)
+                .toList();
+    }
+
     public String getName() {
         return name;
     }

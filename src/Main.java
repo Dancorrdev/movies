@@ -27,6 +27,8 @@ public class Main {
         loadMovies(plataforma);
 
         System.out.println("Mas de " + plataforma.getDuracionTotal() + " minutos de contenido disponible.");
+        plataforma.getPromotionables().forEach(promotionable -> System.out.println(promotionable.promote()));
+
 
         while (true) {
             int selectedOption = ScannerUtils.catchNumber("""
